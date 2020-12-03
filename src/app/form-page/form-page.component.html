@@ -109,7 +109,7 @@
 
       <div class="city-div">
         <label>City</label>
-        <ngx-geo-autocomplete [userSettings]="userSettings5" (componentCallback)="autoCompleteCallback($event)">
+        <ngx-geo-autocomplete  (componentCallback)="autoCompleteCallback($event)">
         </ngx-geo-autocomplete>
       </div>
       <span class="error-span" *ngIf="form.get('city').hasError('required')">
