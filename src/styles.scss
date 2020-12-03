@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.button-included[_ngcontent-ucc-c95] input.button-included[_ngcontent-ucc-c95] input{
+    border:none;
+    border-bottom: 1px solid #d9d9d9;
+
+
+}
+.custom-autocomplete__input{
+    color: red;
+    input{
+        border:none !important;
+        border-bottom: 1px solid #d9d9d9 !important;
+        padding-left: 0 !important;
+           
+    }
+    .search-icon{
+        border-left: none !important;
+    }
+}
+
+.iti {
+    width: 100%;
+    .custom{
+        width: 100%;
+    border: none !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+    }
+}

@@ -1,0 +1,131 @@
+<section class="sample-app-content">
+  <h1>Angular Form:</h1>
+  <div class="outer-div" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="group-gap">
+
+      <div class="avatar-upload">
+        <div class="avatar-edit">
+          <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)" />
+        </div>
+        <div class="avatar-preview">
+          <div id="imagePreview" [style.backgroundImage]="'url('+ imageUrl +')'">
+            <button mat-mini-fab color="primary" type="submit" (click)="fileInput.click()">
+              <mat-icon>camera</mat-icon>
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <mat-form-field class="form-group row">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput formControlName="emailId" [errorStateMatcher]="matcher"
+        placeholder="Ex. pat@example.com">
+      <mat-error *ngIf="form.get('emailId').hasError('pattern') && !form.get('emailId').hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="form.get('emailId').hasError('required')">
+        Email is required
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-group row" formGroupName="passwords">
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input #passwordInput class="password-input" [type]="passwordType" matInput formControlName="password"
+          [errorStateMatcher]="misMatcher">
+        <button *ngIf="!passwordShow" (click)="toggleShow()" mat-icon-button color="primary"
+          aria-label="Example icon button with a vertical three dot icon">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button *ngIf="passwordShow" (click)="toggleShow()" mat-icon-button color="primary"
+          aria-label="Example icon button with a vertical three dot icon">
+          <mat-icon>visibility_off</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get(['passwords','password']).hasError('required')">
+          Please enter a Password
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Confirm Password</mat-label>
+        <input class="password-input" [type]="passwordConfirmType" matInput formControlName="confirm_password"
+          [errorStateMatcher]="misMatcher">
+        <button *ngIf="!passwordConfirmShow" (click)="toggleConfirmShow()" mat-icon-button color="primary"
+          aria-label="Example icon button with a vertical three dot icon">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button *ngIf="passwordConfirmShow" (click)="toggleConfirmShow()" mat-icon-button color="primary"
+          aria-label="Example icon button with a vertical three dot icon">
+          <mat-icon>visibility_off</mat-icon>
+        </button>
+        <mat-error
+          *ngIf="form.get(['passwords','confirm_password']).hasError('required') || form.get('passwords').hasError('passwordMismatch')">
+          password does not match
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+    <div class="form-group row phone-div">
+      <label>Phone Number</label>
+      <ngx-intl-tel-input [cssClass]="'custom'"
+        [preferredCountries]="[CountryISO.UnitedStates, CountryISO.UnitedKingdom]" [enableAutoCountrySelect]="true"
+        [enablePlaceholder]="true" [searchCountryFlag]="true"
+        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+        [selectedCountryISO]="CountryISO.India" [maxLength]="15" [tooltipField]="TooltipLabel.Name"
+        [phoneValidation]="true" [separateDialCode]="true" name="phone" formControlName="phone"></ngx-intl-tel-input>
+
+      <span class="error-span" *ngIf="form.get('phone').hasError('required') && (form.get('phone').dirty || form.get('phone').touched)">
+        Phone Number is required
+      </span>
+      <span class="error-span"
+        *ngIf="!form.get('phone').hasError('required') && form.get('phone').hasError('validatePhoneNumber')&& (form.get('phone').dirty || form.get('phone').touched)">
+        Enter a valid Phone Number
+      </span>
+    </div>
+
+    <div class="form-group row phone-div">
+      <label id="example-radio-group-label">Gender</label>
+      <mat-radio-group color="primary" formControlName="gender">
+        <mat-radio-button value="male">Male</mat-radio-button>
+        <mat-radio-button value="female">Female</mat-radio-button>
+      </mat-radio-group>
+      <mat-error
+        *ngIf="form.get('gender').hasError('required') && (form.get('gender').dirty || form.get('gender').touched)">
+        Gender is required
+      </mat-error>
+    </div>
+    <mat-form-field class="form-group row">
+      <mat-label>Hobbies</mat-label>
+      <mat-select formControlName="hobbies" multiple [errorStateMatcher]="matcher">
+        <mat-option *ngFor="let hobby of hobbiesList" [value]="hobby">{{hobby}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('hobbies').hasError('required')">
+        Hobbies required
+      </mat-error>
+    </mat-form-field>
+
+    <div class=" row">
+
+      <div class="city-div">
+        <label>City</label>
+        <ngx-geo-autocomplete [userSettings]="userSettings5" (componentCallback)="autoCompleteCallback($event)">
+        </ngx-geo-autocomplete>
+      </div>
+      <span class="error-span" *ngIf="form.get('city').hasError('required')">
+        City is required
+      </span>
+    </div>
+
+    <section class="agree-section">
+      <mat-checkbox color="primary" class="example-margin" formControlName="iAgree">
+        I agree
+      </mat-checkbox>
+    </section>
+    <div class="submit-div">
+      <button [disabled]="form.invalid" type="submit" mat-raised-button color="primary">Submit</button>
+
+    </div>
+
+  </div>
+</section>
